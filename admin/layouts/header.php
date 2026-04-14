@@ -1,0 +1,1 @@
+<div style="margin-left:240px; padding:20px; background:#f1f5f9; min-height:100vh;"></div>

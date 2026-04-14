@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'Breathing';
+    src: url('fonts/Breathing.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+/* HEADER */
+/* 1. TRẠNG THÁI BAN ĐẦU (Trên cùng - Trong suốt) */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    
+    /* Tạo một lớp phủ gradient tối nhẹ ở trên cùng để menu trắng dễ đọc hơn trên ảnh slide */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 100%); 
+    transition: all 0.4s ease;
+}
+
+/* TRẠNG THÁI KHI CUỘN (SCROLLED) */
+.navbar.scrolled {
+    
+    background-image: linear-gradient(to right, 
+        #1A7431 0%, 
+        #208B3A 33%, 
+        #25A244 66%, 
+        #2DC653 100%
+    ) !important;
+
+    background-color: transparent !important; /* Xóa màu nền đơn sắc cũ */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important; /* Tạo độ nổi cho thanh Menu */
+    padding: 10px 50px; /* Thu gọn chiều cao khi cuộn */
+    transition: all 0.4s ease; /* Hiệu ứng chuyển đổi mượt mà */
+}
+.navbar .menu li a,
+.navbar .search-box button {
+    color: white;
+}
+
+/* LEFT */
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* LOGO */
+.logo img {
+    height: 80px;
+    width: auto;
+    display: block;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+}
+
+.menu li {
+    position: relative;
+    list-style: none;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+
+    padding: 10px;
+    display: inline-block; /* QUAN TRỌNG */
+
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1001;
+}
+
+.menu li a:hover {
+    transform: scale(1.1);
+    color: #d4edda;
+}
+
+/* DROPDOWN */
+.dropdown-menu {
+    display: none;                         /* Mặc định ẩn danh sách */
+    position: absolute;
+    top: 100%;                             /* Nằm ngay dưới menu chính */
+    left: 0;
+    background-color: #ffffff;             /* Nền màu trắng */
+    min-width: 220px;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    z-index: 1000;
+    
+    /* Hiệu ứng đổ bóng và gạch chân đỏ đậm như Ảnh 1 */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-bottom: 4px solid #b22222; 
+    border-radius: 0 0 5px 5px;            /* Bo góc nhẹ phía dưới */
+}
+
+/* 2. HIỆN DANH SÁCH KHI RÊ CHUỘT VÀO MỤC CHA */
+.dropdown:hover .dropdown-menu {
+    display: block;                        /* Hiện khi hover vào thẻ li.dropdown */
+    animation: fadeInSlide 0.3s ease;      /* Thêm hiệu ứng xuất hiện mượt */
+}
+
+/* 3. ĐỊNH DẠNG CHỮ MÀU XANH LÁ ĐẬM */
+.dropdown-menu li a {
+    color: #1b4332 !important;             /* Màu xanh lá đậm */
+    padding: 12px 25px !important;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;             /* Tạo độ mượt khi phóng to */
+}
+
+/* 4. PHÓNG TO KHI RÊ CHUỘT VÀO MỤC CON */
+.dropdown-menu li a:hover {
+    background-color: #f0fdf4;             /* Nền xanh cực nhạt khi hover */
+    color: #2e7d32 !important;             /* Đổi sang xanh tươi hơn một chút */
+    transform: scale(1.08);                /* Phóng to mục được chọn 8% */
+    padding-left: 30px !important;         /* Đẩy nhẹ sang phải để không bị che khuất */
+}
+
+/* Hiệu ứng hoạt họa khi menu xổ xuống */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* SEARCH */
+.search-box form {
+    position: relative;
+}
+
+.search-box input {
+    width: 220px;
+    padding: 10px 40px 10px 15px;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-box button {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #2e7d32;
+    font-size: 16px;
+}

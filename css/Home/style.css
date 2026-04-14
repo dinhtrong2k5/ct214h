@@ -1,0 +1,614 @@
+@font-face {
+    font-family: 'Breathing';
+    src: url('fonts/Breathing.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+
+/* SLIDER */
+.slider {
+    margin-top: 0;
+    position: relative;
+    width: 100%;
+    height: 650px;
+    overflow: hidden;
+}
+
+.slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.slider::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.22);
+    z-index: 5;
+}
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+/* CHỮ TRÊN SLIDE */
+.slider-text {
+    position: absolute;
+    top: 55%; /* Nhích lên một chút để cân đối */
+    right: 6%;
+
+    font-family: 'Breathing', cursive;
+    font-size: clamp(80px, 6vw, 105px);
+    font-weight: 400;
+
+    /* --- PHẦN SỬA ĐỂ TÁCH CHỮ --- */
+    display: flex;
+    flex-direction: column; /* Xếp thành hàng dọc */
+    align-items: flex-end;   /* Căn lề phải */
+    line-height: 1.1;        /* Reset lại line-height */
+    gap: 20px;               /* TẠO KHOẢNG TRỐNG 20px GIỮA 2 DÒNG */
+    letter-spacing: 3px;     /* Khoảng cách giữa các con chữ */
+    /* ---------------------------- */
+
+    text-align: right;
+    color: white;
+    opacity: 0;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.35);
+    z-index: 10;
+
+    animation: fadeInSmooth 1.8s ease-out forwards,
+               gentleFloat 3.5s ease-in-out infinite 1.8s;
+}
+
+/* FADE IN MƯỢT */
+@keyframes fadeInSmooth {
+    from {
+        opacity: 0;
+        transform: translateY(8px) rotate(-4deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px) rotate(-4deg);
+    }
+}
+
+/* LƠ LỬNG MẠNH HƠN */
+@keyframes gentleFloat {
+    0% {
+        transform: translateY(0px) rotate(-4deg);
+    }
+
+    25% {
+        transform: translateY(-6px) rotate(-4deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(-4deg);
+    }
+
+    75% {
+        transform: translateY(-6px) rotate(-4deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(-4deg);
+    }
+}
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 28px;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.prev {
+    left: 20px;
+}
+
+.next {
+    right: 20px;
+}
+
+/*INTRO */
+.intro {
+    width: 100%;
+    background: #f0fff0;
+    padding: 80px 20px; /* tăng chiều cao */
+}
+
+.intro-content {
+    max-width: 1000px; /* rộng hơn */
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* DISCOVER CAN THO */
+.intro-content h1 {
+    font-size: 56px;      /* to mạnh */
+    font-weight: 800;     /* đậm hơn */
+    color: #1e3d2f;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+/* BOUNDLESS ADVENTURES */
+.intro-content h2 {
+    font-size: 40px;      /* to */
+    font-weight: 300;     /* mảnh */
+    color: #2f5d4f;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+}
+
+/* nội dung */
+.intro-content p {
+    font-size: 20px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 18px;
+}
+
+#map {
+    width: 100%;
+    height: 100vh; /* Cao bằng toàn bộ màn hình */
+    z-index: 1;
+}
+
+/* Thanh thông tin phía trên */
+.header-info {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 30px;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid #ddd;
+}
+
+.header-info h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.header-info p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+}
+
+/* Tùy chỉnh màu sắc Popup */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+/* --- FEATURED SECTION --- */
+.featured-section {
+    padding: 30px 10%;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* Tiêu đề có gạch ngang 2 bên */
+.featured-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.featured-header .line {
+    height: 2px;
+    background-color: #1b4332; /* Màu xanh lá đậm */
+    flex: 1;
+    max-width: 200px;
+}
+
+.featured-header h1 {
+    font-size: 32px;
+    color: #1b4332;
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.featured-desc {
+    max-width: 800px;
+    margin: 0 auto 15px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+}
+/* --- DISCOVERY SECTION --- */
+.discovery-section {
+    padding: 10px 10% 60px 10%;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* Tab Menu Buttons */
+.filter-tabs {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tab-btn {
+    padding: 12px 30px;
+    border: 1px solid #155d27;
+    background: white;
+    color: #333;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-btn.active {
+    background-color: #155d27;
+    color: white;
+    transform: scale(1.15); /* Phóng to nút khi được chọn */
+    box-shadow: 0 4px 15px rgba(178, 34, 34, 0.3);
+}
+
+/* Grid Layout */
+.places-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+/* Card Design */
+.place-card {
+    flex: 1;
+    min-width: 350px;
+    max-width: 450px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng Phóng To Ảnh khi rê chuột vào thẻ */
+.image-box {
+    position: relative;
+    height: 300px;
+    overflow: hidden; /* Cần thiết để ảnh không tràn ra khi phóng to */
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease; /* Tạo độ mượt khi zoom */
+}
+
+.place-card:hover .image-box img {
+    transform: scale(1.15); /* PHÓNG TO ẢNH 15% */
+}
+
+/* Chữ đè trên ảnh */
+.image-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Breathing', cursive; /* Sử dụng font của bạn */
+    text-align: left;
+}
+
+/* Thông tin phía dưới ảnh */
+.place-desc {
+    padding: 20px;
+    text-align: left;
+    background: #fff;
+}
+
+.place-desc p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+}
+/* Layout 3 thẻ ngang hàng */
+.tab-content {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.place-card {
+    flex: 1;
+    max-width: 380px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column; /* Đẩy nút xuống dưới cùng */
+}
+
+/* Hiệu ứng Zoom ảnh */
+.image-box {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.place-card:hover .image-box img {
+    transform: scale(1.15); /* Phóng to ảnh khi hover vào thẻ */
+}
+
+/* Nút Xem chi tiết */
+.place-desc {
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.place-desc p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.view-details {
+    align-self: flex-start;
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #1b4332; /* Màu xanh lá đậm của bạn */
+    border: 1.5px solid #1b4332;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.view-details:hover {
+    background-color: #1b4332;
+    color: #fff !important;
+    transform: scale(1.05); /* Phóng to nút nhẹ khi hover */
+}
+
+/* Chữ đè trên ảnh */
+.image-title {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    font-size: 20px;
+    font-family: 'Breathing', cursive;
+}
+
+/* --- CUISINE SECTION --- */
+.cuisine-section {
+    padding: 80px 10%; /* Giữ khoảng cách lề đồng bộ */
+    background-color: #f0fff0; /* Màu nền xanh cực nhạt */
+    text-align: center;
+}
+
+/* Grid Layout để chia 6 thẻ thành 2 hàng (3 thẻ/hàng) */
+.cuisine-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cột bằng nhau */
+    gap: 30px; /* Khoảng cách giữa các thẻ */
+    max-width: 1200px; /* Độ rộng tối đa của grid */
+    margin: 50px auto 0; /* Căn giữa grid và tạo khoảng cách phía trên */
+}
+
+/* --- ĐỊNH DẠNG VÀ HIỆU ỨNG THẺ MÓN ĂN (FOOD CARD) --- */
+.food-card {
+    background: #fff; /* Nền trắng */
+    border-radius: 15px; /* Bo góc thẻ */
+    overflow: hidden; /* Cần thiết để ảnh không tràn ra khi phóng to */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Đổ bóng nhẹ */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Hiệu ứng mượt mà */
+    display: flex; /* Sử dụng Flexbox để dàn nội dung bên trong */
+    flex-direction: column; /* Dàn nội dung theo chiều dọc */
+    cursor: pointer; /* Đổi con trỏ chuột khi rê vào */
+}
+
+/* --- HIỆU ỨNG KHI RÊ CHUỘT VÀO THẺ (HOVER) --- */
+.food-card:hover {
+    transform: translateY(-10px) scale(1.03); /* Nhích lên 10px và phóng to 3% */
+    box-shadow: 0 15px 30px rgba(46, 125, 50, 0.2); /* Đổ bóng đậm hơn và có màu xanh lá */
+    z-index: 10; /* Nổi lên trên các thẻ khác */
+}
+
+/* Hiệu ứng phóng to ảnh khi hover vào thẻ */
+.food-card .image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease; /* Zoom ảnh mượt mà */
+}
+
+.food-card:hover .image-box img {
+    transform: scale(1.15); /* PHÓNG TO ẢNH 15% */
+}
+
+/* --- TÁI SỬ DỤNG CÁC CLASS ĐÃ CÓ TRONG STYLE.CSS --- */
+/* (Phần này chỉ để đảm bảo nút 'View More' và chữ trên ảnh hiển thị đúng, 
+   nếu bạn đã định nghĩa các class này rồi thì không cần thêm lại) */
+
+.image-box {
+    position: relative;
+    height: 260px; /* Chiều cao hộp ảnh */
+    overflow: hidden; /* */
+}
+
+.image-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Breathing', cursive; /* Sử dụng font nghệ thuật */
+    text-align: left;
+}
+
+.place-desc {
+    padding: 20px;
+    text-align: left;
+    background: #fff;
+    flex-grow: 1; /* Cho phép phần mô tả chiếm không gian còn lại */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* */
+}
+
+.place-desc p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.view-details {
+    align-self: flex-start;
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #1b4332; /* Màu xanh lá đậm (#1b4332) */
+    border: 1.5px solid #1b4332;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.view-details:hover {
+    background-color: #1b4332;
+    color: #fff !important;
+    transform: scale(1.05); /* Phóng to nút nhẹ khi hover */
+}
+
+/* --- FESTIVAL SLIDER --- */
+.festival-section {
+    padding: 80px 5%;
+    background-color: #ffffff; /* Nền trắng như yêu cầu */
+    overflow: hidden;
+}
+
+.festival-slider-container {
+    position: relative;
+    max-width: 1300px;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+}
+
+.festival-viewport {
+    width: 100%;
+    overflow: hidden; /* Giữ các thẻ không tràn ra ngoài trang */
+    padding: 20px 5px;
+}
+
+.festival-track {
+    display: flex;
+    gap: 25px; /* Khoảng cách giữa các thẻ */
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); /* Trượt mượt mà */
+}
+
+/* Kích thước thẻ */
+.festival-card {
+    flex: 0 0 calc(33.333% - 17px); /* Hiện 3 thẻ trên PC */
+    min-width: 350px;
+    border: 1px solid #f0f0f0;
+}
+
+/* Nhãn thời gian */
+.event-date {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #155D27;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 5;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Nút điều hướng */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #155D27;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s;
+    font-size: 18px;
+}
+
+.slider-btn:hover { background: #1b4332; transform: translateY(-50%) scale(1.1); }
+.prev-btn { left: -20px; }
+.next-btn { right: -20px; }
+
+/* Responsive */
+@media (max-width: 1024px) { .festival-card { flex: 0 0 calc(50% - 15px); } }
+@media (max-width: 768px) { .festival-card { flex: 0 0 100%; } .prev-btn, .next-btn { display: none; } }

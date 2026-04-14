@@ -1,0 +1,449 @@
+@font-face {
+    font-family: 'Breathing';
+    src: url('../fonts/Breathing.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- CÀI ĐẶT CHUNG --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px; 
+    color: #4f4f4f; 
+    background-color: #f5f5f5; 
+    line-height: 1.6;
+}
+
+/* Áp dụng màu xanh lá #1b4332 cho tất cả các thẻ tiêu đề */
+h1, h2, h3, h4, h5, h6 {
+    color: #208b3a; 
+    margin: 0;
+}
+
+/* --- BANNER --- */
+.hero-banner {
+    width: 100%;
+    height: 350px;
+    /* Thay link ảnh chợ nổi của bạn vào đây */
+    background-image: url('../../images/itinerary/cantho.jpg'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.brush-text {
+    font-family: 'Breathing', cursive; 
+    font-size: 70px; 
+    color: white; 
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5); 
+    letter-spacing: 5px;
+}
+
+/* --- BỐ CỤC NỘI DUNG CHÍNH --- */
+.main-content {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* --- CỘT TRÁI (SIDEBAR) --- */
+.sidebar {
+    flex: 0 0 250px; 
+}
+
+.sidebar-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-btn {
+    display: block; /* THÊM DÒNG NÀY: Để thẻ <a> phình to ra chiếm hết chiều ngang */
+    text-decoration: none; /* THÊM DÒNG NÀY: Xóa gạch chân mặc định của link */
+    text-align: center;
+
+    background-color: white;
+    color: #4f4f4f;
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Màu xanh chủ đạo của nút: #218c3b */
+.filter-btn.active, .filter-btn:hover {
+    background-color: #208b3a;
+    color: white;
+    border-color: #208b3a;
+}
+
+/* --- CỘT PHẢI (TOUR GRID) --- */
+.tour-section {
+    flex: 1; 
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.section-header {
+    margin-bottom: 30px;
+}
+
+.section-header h2 {
+    font-size: 28px; 
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.section-header p {
+    font-size: 15px;
+}
+
+.tour-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px;
+}
+
+/* --- THẺ TOUR --- */
+.tour-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+    background: white;
+}
+
+.tour-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.tour-card h4 {
+    margin: 15px 0;
+    font-size: 16px; 
+    text-align: center;
+}
+
+.view-btn {
+    background-color: #208b3a;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.2s;
+}
+
+.view-btn:hover {
+    background-color: #186b2b;
+}
+
+/* --- RESPONSIVE TRANG CHÍNH --- */
+@media (max-width: 992px) {
+    .main-content {
+        flex-direction: column;
+    }
+    .sidebar {
+        flex: 100%;
+        width: 100%;
+        display: flex;
+        gap: 20px;
+    }
+    .sidebar-image { display: none; }
+    .filter-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .tour-grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (max-width: 600px) {
+    .tour-grid {
+        grid-template-columns: 1fr; 
+    }
+    .brush-text {
+        font-size: 60px;
+    }
+}
+
+
+/* LICH TRINH */
+.tour-modal-overlay {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.4); 
+    backdrop-filter: blur(5px); 
+    z-index: 9999; 
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. Hộp Popup màu xám bên trong */
+.tour-modal-content {
+    background-color: #dfdfdf;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    max-width: 750px; 
+    width: 90%;
+    max-height: 90vh; 
+    overflow-y: auto; 
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. Nút X đóng Popup */
+.close-tour-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close-tour-btn:hover {
+    color: #208b3a; 
+}
+
+/* 4. Định dạng chữ tiêu đề trong Popup */
+.tour-detail-wrapper {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+.detail-subtitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* --- CẤU TRÚC TIMELINE (LỊCH TRÌNH BÊN TRONG POPUP) --- */
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 20px; 
+    min-height: 90px;
+    margin-bottom: 25px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Ảnh minh họa của từng mốc thời gian */
+.timeline-image {
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.timeline-image img {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Icon và Đường kẻ dọc */
+.timeline-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35px;
+    flex-shrink: 0;
+}
+
+.timeline-icon {
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+}
+
+.timeline-line {
+    width: 2px;
+    background-color: #5d7c68; 
+    flex-grow: 1;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.timeline-item:last-child .timeline-line {
+    display: none; 
+}
+
+/* Nội dung chữ của lịch trình */
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.timeline-content h4 {
+    font-size: 16px;
+    color: #000;
+    margin: 0 0 6px 0;
+    font-weight: 700;
+}
+
+.timeline-content p {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* --- RESPONSIVE CHO POPUP TRÊN ĐIỆN THOẠI --- */
+@media (max-width: 600px) {
+    .tour-modal-content {
+        padding: 20px;
+    }
+    .timeline-item {
+        flex-direction: column; 
+        gap: 10px;
+        background: white; 
+        padding: 15px;
+        border-radius: 8px;
+    }
+    .timeline-indicator {
+        display: none; 
+    }
+    .timeline-image img {
+        width: 100%;
+        height: 180px;
+    }
+}
+
+/* --- CSS CHO TIÊU ĐỀ NGÀY (DAY 1, DAY 2...) TRONG POPUP --- */
+.day-divider {
+    text-align: center;
+    margin: 10px 0 25px 0;
+    position: relative;
+    clear: both;
+}
+
+.day-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #bbb;
+    z-index: 1;
+}
+
+.day-divider span {
+    background-color: #208b3a; /* Nền xanh lá */
+    color: white; /* Chữ trắng */
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 14px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* PAGING */
+/* --- CSS CHO THANH PHÂN TRANG (PAGINATION) --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.page-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    color: #4f4f4f;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.page-btn:hover {
+    background-color: #e5e6e4;
+    border-color: #208b3a;
+    color: #208b3a;
+}
+
+.page-btn.active {
+    background-color: #208b3a;
+    color: white;
+    border-color: #208b3a;
+}
